@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Structure Inspector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>HTML Structure Inspector</h1>
+    <form method="post">
+        <label for="url" id="label_URL">Enter URL:</label>
+        <input type="text" id="url" name="url" placeholder="https://example.com" required>
+        
+        
+        <label style="display:block; margin-top: 20px;" id="label_header">Select tags to highlight:</label>
+        <div class="tag-selection">
+            {% for tag in tags %}
+            <div class="tag-option">
+                <input type="checkbox" id="tag-{{ tag }}" name="tags" value="{{ tag }}">
+                <label for="tag-{{ tag }}">&lt;{{ tag }}&gt;</label>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit">Inspect</button>
+    </form>
+
+    {% if structure %}
+    <h2 style="font-size:30px">HTML Structure:</h2>
+    <pre>{{ structure|safe }}</pre>
+    {% endif %}
+
+    {% if interesting_tags %}
+<h2 style="font-size:30px">Interesting Tags:</h2>
+<pre>{{ interesting_tags|safe }}</pre>
+{% else %}
+<!-- Do not show the Interesting Tags section if none are selected -->
+{% endif %}
+
+</body>
+</html>
